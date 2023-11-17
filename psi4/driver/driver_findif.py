@@ -158,6 +158,8 @@ from .constants import constants, nppp10, pp
 from .p4util.exceptions import ValidationError
 from .task_base import AtomicComputer, BaseComputer, EnergyGradientHessianWfnReturn
 
+import molsym
+
 if TYPE_CHECKING:
     import qcportal
 
@@ -281,9 +283,16 @@ def _initialize_findif(mol: Union["qcdb.Molecule", core.Molecule],
     method_allowed_irreps = 0x1 if mode == "1_0" else 0xFF
     # core.get_option returns an int, but CdSalcList expect a bool, so re-cast
     salc_list = core.CdSalcList(mol, method_allowed_irreps, t_project, r_project)
-
+    salc_list.print_out()
+    molschema = mol.to_schema('psi4')
+    print(molschema)
+    print("BEANS")
+    molsym_mol = molsym.Molecule.from_schema(molschema)
+    symtext = molsym.Symtext.from_molecule(molsym_mol)
     n_atom = mol.natom()
-    n_irrep = salc_list.nirrep()
+    n_irrep = len(symtext.chartable.irreps)
+    #n_irrep = salc_list.nirrep()
+    n_irrep = 1
     n_salc = salc_list.ncd()
 
     if print_lvl and verbose:
