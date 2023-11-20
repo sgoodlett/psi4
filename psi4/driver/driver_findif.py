@@ -283,16 +283,22 @@ def _initialize_findif(mol: Union["qcdb.Molecule", core.Molecule],
     method_allowed_irreps = 0x1 if mode == "1_0" else 0xFF
     # core.get_option returns an int, but CdSalcList expect a bool, so re-cast
     salc_list = core.CdSalcList(mol, method_allowed_irreps, t_project, r_project)
+    core.print_out("AAAAAAAA")
     salc_list.print_out()
+    core.print_out("BBBBBBBB")
     molschema = mol.to_schema('psi4')
-    print(molschema)
-    print("BEANS")
-    molsym_mol = molsym.Molecule.from_schema(molschema)
+    
+    molsym_mol = molsym.Molecule.from_psi4_schema(molschema)
     symtext = molsym.Symtext.from_molecule(molsym_mol)
+    
     n_atom = mol.natom()
-    n_irrep = len(symtext.chartable.irreps)
-    #n_irrep = salc_list.nirrep()
-    n_irrep = 1
+    #n_irrep = len(symtext.chartable.irreps)
+    molsym_cartcoords = molsym.salcs.CartesianCoordinates(symtext)
+    molsym_salcs = molsym.salcs.ProjectionOp(symtext, molsym_cartcoords)
+    #n_salc = len(molsym_salcs)
+    
+    n_irrep = salc_list.nirrep()
+    #n_irrep = 1
     n_salc = salc_list.ncd()
 
     if print_lvl and verbose:
@@ -339,8 +345,12 @@ def _initialize_findif(mol: Union["qcdb.Molecule", core.Molecule],
 
     # Populate salc_indices_pi for all irreps.
     # * Python error if iterate through `salc_list`
-    for i in range(len(salc_list)):
+    for i in range(len(salc_list)): #TODO
         salc_indices_pi[salc_list[i].irrep_index()].append(i)
+
+    core.print_out("CCCCCCCCC")
+    print(salc_indices_pi)
+    core.print_out("DDDDDDDDD")
 
     # If the method allows more than one irrep, print how the irreps partition the SALCS.
     if print_lvl and method_allowed_irreps != 0x1 and verbose:
@@ -383,14 +393,14 @@ def _initialize_findif(mol: Union["qcdb.Molecule", core.Molecule],
 
     if print_lvl > 1 and verbose:
         for i in range(len(salc_list)):
-            salc_list[i].print_out()
+            salc_list[i].print_out() #TODO
 
     data.update({
         "n_disp_pi": n_disp_pi,
         "n_irrep": n_irrep,
         "n_salc": n_salc,
         "n_atom": n_atom,
-        "salc_list": salc_list,
+        "salc_list": salc_list, #TODO
         "salc_indices_pi": salc_indices_pi,
         "disps": disps,
         "project_translations": t_project,
