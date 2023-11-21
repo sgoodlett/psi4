@@ -295,10 +295,14 @@ def _initialize_findif(mol: Union["qcdb.Molecule", core.Molecule],
     #n_irrep = len(symtext.chartable.irreps)
     molsym_cartcoords = molsym.salcs.CartesianCoordinates(symtext)
     molsym_salcs = molsym.salcs.ProjectionOp(symtext, molsym_cartcoords)
+    print("----------------")
+    print(mol.inertia_tensor().np)
+    print(molsym.molecule.calcmoit(molsym_mol))
+    print(molsym.molecule.calcmoit(symtext.mol))
+    print("----------------")
     #n_salc = len(molsym_salcs)
     
     n_irrep = salc_list.nirrep()
-    #n_irrep = 1
     n_salc = salc_list.ncd()
 
     if print_lvl and verbose:
