@@ -1,0 +1,2 @@
+2024-05-01:16:08:11,371 INFO     [psi4.driver.task_planner:286] PLANNING Atomic:  keywords={'function_kwargs': {}}
+2024-05-01:16:08:11,374 INFO     [psi4.driver.driver:517] Compute energy(): method=smints, basis=sto-3g, molecule=default, nre=9.77940618285264

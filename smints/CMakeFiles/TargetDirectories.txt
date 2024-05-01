@@ -1,0 +1,3 @@
+/home/smg13363/psi4/smints/CMakeFiles/smints.dir
+/home/smg13363/psi4/smints/CMakeFiles/edit_cache.dir
+/home/smg13363/psi4/smints/CMakeFiles/rebuild_cache.dir
