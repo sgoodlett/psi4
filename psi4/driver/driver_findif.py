@@ -297,8 +297,8 @@ def _initialize_findif(mol: Union["qcdb.Molecule", core.Molecule],
     molsym_salcs = molsym.salcs.ProjectionOp(symtext, molsym_cartcoords)
     print("----------------")
     print(mol.inertia_tensor().np)
-    print(molsym.molecule.calcmoit(molsym_mol))
-    print(molsym.molecule.calcmoit(symtext.mol))
+    #print(molsym.molecule.calcmoit(molsym_mol))
+    #print(molsym.molecule.calcmoit(symtext.mol))
     print("----------------")
     #n_salc = len(molsym_salcs)
     
