@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/smg13363/psi4/smints/sointegrals.cc" "CMakeFiles/smints.dir/sointegrals.cc.o" "gcc" "CMakeFiles/smints.dir/sointegrals.cc.o.d"
+  "/home/sgoodlett/psi4/smints/sointegrals.cc" "CMakeFiles/smints.dir/sointegrals.cc.o" "gcc" "CMakeFiles/smints.dir/sointegrals.cc.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

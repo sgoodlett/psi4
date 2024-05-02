@@ -45,19 +45,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/smg13363/anaconda3/envs/psi4sym/bin/cmake
+CMAKE_COMMAND = /home/sgoodlett/anaconda3/envs/psi4sym/bin/cmake
 
 # The command to remove a file.
-RM = /home/smg13363/anaconda3/envs/psi4sym/bin/cmake -E rm -f
+RM = /home/sgoodlett/anaconda3/envs/psi4sym/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/smg13363/psi4/smints
+CMAKE_SOURCE_DIR = /home/sgoodlett/psi4/smints
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/smg13363/psi4/smints
+CMAKE_BINARY_DIR = /home/sgoodlett/psi4/smints
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -81,14 +81,14 @@ clean: CMakeFiles/smints.dir/clean
 CMakeFiles/smints.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/smints.dir/build.make CMakeFiles/smints.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/smints.dir/build.make CMakeFiles/smints.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/smg13363/psi4/smints/CMakeFiles --progress-num=1,2 "Built target smints"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/sgoodlett/psi4/smints/CMakeFiles --progress-num=1,2 "Built target smints"
 .PHONY : CMakeFiles/smints.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/smints.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/smg13363/psi4/smints/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sgoodlett/psi4/smints/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/smints.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/smg13363/psi4/smints/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sgoodlett/psi4/smints/CMakeFiles 0
 .PHONY : CMakeFiles/smints.dir/rule
 
 # Convenience name for target.

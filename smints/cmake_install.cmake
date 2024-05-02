@@ -1,4 +1,4 @@
-# Install script for directory: /home/smg13363/psi4/smints
+# Install script for directory: /home/sgoodlett/psi4/smints
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,7 +39,7 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "/home/smg13363/anaconda3/envs/psi4sym/bin/x86_64-conda-linux-gnu-objdump")
+  set(CMAKE_OBJDUMP "/home/sgoodlett/anaconda3/envs/psi4sym/bin/x86_64-conda-linux-gnu-objdump")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/smg13363/psi4/smints/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/sgoodlett/psi4/smints/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

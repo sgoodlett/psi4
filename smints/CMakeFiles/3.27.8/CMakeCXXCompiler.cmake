@@ -1,4 +1,4 @@
-set(CMAKE_CXX_COMPILER "/home/smg13363/anaconda3/envs/psi4sym/bin/x86_64-conda-linux-gnu-c++")
+set(CMAKE_CXX_COMPILER "/home/sgoodlett/anaconda3/envs/psi4sym/bin/x86_64-conda-linux-gnu-c++")
 set(CMAKE_CXX_COMPILER_ARG1 "")
 set(CMAKE_CXX_COMPILER_ID "GNU")
 set(CMAKE_CXX_COMPILER_VERSION "12.3.0")
@@ -19,15 +19,15 @@ set(CMAKE_CXX_SIMULATE_ID "")
 set(CMAKE_CXX_COMPILER_FRONTEND_VARIANT "GNU")
 set(CMAKE_CXX_SIMULATE_VERSION "")
 
-set(CMAKE_CXX_COMPILER_SYSROOT "/home/smg13363/anaconda3/envs/psi4sym/bin/../x86_64-conda-linux-gnu/sysroot/usr")
-set(CMAKE_COMPILER_SYSROOT "/home/smg13363/anaconda3/envs/psi4sym/bin/../x86_64-conda-linux-gnu/sysroot/usr")
+set(CMAKE_CXX_COMPILER_SYSROOT "/home/sgoodlett/anaconda3/envs/psi4sym/bin/../x86_64-conda-linux-gnu/sysroot/usr")
+set(CMAKE_COMPILER_SYSROOT "/home/sgoodlett/anaconda3/envs/psi4sym/bin/../x86_64-conda-linux-gnu/sysroot/usr")
 
 
-set(CMAKE_AR "/home/smg13363/anaconda3/envs/psi4sym/bin/x86_64-conda-linux-gnu-ar")
-set(CMAKE_CXX_COMPILER_AR "/home/smg13363/anaconda3/envs/psi4sym/bin/x86_64-conda-linux-gnu-gcc-ar")
-set(CMAKE_RANLIB "/home/smg13363/anaconda3/envs/psi4sym/bin/x86_64-conda-linux-gnu-ranlib")
-set(CMAKE_CXX_COMPILER_RANLIB "/home/smg13363/anaconda3/envs/psi4sym/bin/x86_64-conda-linux-gnu-gcc-ranlib")
-set(CMAKE_LINKER "/home/smg13363/anaconda3/envs/psi4sym/bin/x86_64-conda-linux-gnu-ld")
+set(CMAKE_AR "/home/sgoodlett/anaconda3/envs/psi4sym/bin/x86_64-conda-linux-gnu-ar")
+set(CMAKE_CXX_COMPILER_AR "/home/sgoodlett/anaconda3/envs/psi4sym/bin/x86_64-conda-linux-gnu-gcc-ar")
+set(CMAKE_RANLIB "/home/sgoodlett/anaconda3/envs/psi4sym/bin/x86_64-conda-linux-gnu-ranlib")
+set(CMAKE_CXX_COMPILER_RANLIB "/home/sgoodlett/anaconda3/envs/psi4sym/bin/x86_64-conda-linux-gnu-gcc-ranlib")
+set(CMAKE_LINKER "/home/sgoodlett/anaconda3/envs/psi4sym/bin/x86_64-conda-linux-gnu-ld")
 set(CMAKE_MT "")
 set(CMAKE_TAPI "CMAKE_TAPI-NOTFOUND")
 set(CMAKE_COMPILER_IS_GNUCXX 1)
@@ -80,7 +80,7 @@ endif()
 
 
 
-set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "/home/smg13363/anaconda3/envs/psi4sym/include;/home/smg13363/anaconda3/envs/psi4sym/lib/gcc/x86_64-conda-linux-gnu/12.3.0/include;/home/smg13363/anaconda3/envs/psi4sym/lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed;/home/smg13363/anaconda3/envs/psi4sym/x86_64-conda-linux-gnu/include;/home/smg13363/anaconda3/envs/psi4sym/x86_64-conda-linux-gnu/include/c++/12.3.0;/home/smg13363/anaconda3/envs/psi4sym/x86_64-conda-linux-gnu/include/c++/12.3.0/x86_64-conda-linux-gnu;/home/smg13363/anaconda3/envs/psi4sym/x86_64-conda-linux-gnu/include/c++/12.3.0/backward;/home/smg13363/anaconda3/envs/psi4sym/x86_64-conda-linux-gnu/sysroot/usr/include")
+set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "/home/sgoodlett/anaconda3/envs/psi4sym/include;/home/sgoodlett/anaconda3/envs/psi4sym/lib/gcc/x86_64-conda-linux-gnu/12.3.0/include;/home/sgoodlett/anaconda3/envs/psi4sym/lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed;/home/sgoodlett/anaconda3/envs/psi4sym/x86_64-conda-linux-gnu/include;/home/sgoodlett/anaconda3/envs/psi4sym/x86_64-conda-linux-gnu/include/c++/12.3.0;/home/sgoodlett/anaconda3/envs/psi4sym/x86_64-conda-linux-gnu/include/c++/12.3.0/x86_64-conda-linux-gnu;/home/sgoodlett/anaconda3/envs/psi4sym/x86_64-conda-linux-gnu/include/c++/12.3.0/backward;/home/sgoodlett/anaconda3/envs/psi4sym/x86_64-conda-linux-gnu/sysroot/usr/include")
 set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "stdc++;m;gcc_s;gcc;c;gcc_s;gcc")
-set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "/home/smg13363/anaconda3/envs/psi4sym/lib;/home/smg13363/anaconda3/envs/p4dev/lib;/home/smg13363/anaconda3/envs/psi4sym/lib/gcc/x86_64-conda-linux-gnu/12.3.0;/home/smg13363/anaconda3/envs/psi4sym/lib/gcc;/home/smg13363/anaconda3/envs/psi4sym/x86_64-conda-linux-gnu/lib;/home/smg13363/anaconda3/envs/psi4sym/x86_64-conda-linux-gnu/sysroot/lib;/home/smg13363/anaconda3/envs/psi4sym/x86_64-conda-linux-gnu/sysroot/usr/lib")
+set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "/home/sgoodlett/anaconda3/envs/psi4sym/lib;/home/sgoodlett/anaconda3/envs/psi4sym/lib/gcc/x86_64-conda-linux-gnu/12.3.0;/home/sgoodlett/anaconda3/envs/psi4sym/lib/gcc;/home/sgoodlett/anaconda3/envs/psi4sym/x86_64-conda-linux-gnu/lib;/home/sgoodlett/anaconda3/envs/psi4sym/x86_64-conda-linux-gnu/sysroot/lib;/home/sgoodlett/anaconda3/envs/psi4sym/x86_64-conda-linux-gnu/sysroot/usr/lib")
 set(CMAKE_CXX_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")

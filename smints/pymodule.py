@@ -31,6 +31,7 @@
 import psi4
 import psi4.driver.p4util as p4util
 from psi4.driver.procrouting import proc_util
+import smints
 import numpy as np
 import molsym
 
@@ -84,11 +85,13 @@ def run_smints(name, **kwargs):
     print(p4irrep_mat.nph)
     print(p4fxn_map.nph)
 
+    smints_G = smints.smints_benbee(ref_wfn, p4salcs, p4irrepdims, p4mult_table, p4atom_map, p4character_table, p4irrep_mat, p4fxn_map)
+    print(smints_G)
     # Call the Psi4 plugin
     # Please note that setting the reference wavefunction in this way is ONLY for plugins
-    #smints_wfn = psi4.core.plugin('smints.so', ref_wfn)
+    smints_wfn = psi4.core.plugin('smints.so', ref_wfn)
 
-    smints_wfn = psi4.core.plugin('smints.so', ref_wfn, p4salcs, p4irrepdims, p4mult_table, p4atom_map, p4character_table, p4irrep_mat, p4fxn_map)
+    #smints_wfn = psi4.core.plugin('smints.so', ref_wfn, p4salcs, p4irrepdims, p4mult_table, p4atom_map, p4character_table, p4irrep_mat, p4fxn_map)
 
     return smints_wfn
 

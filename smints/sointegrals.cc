@@ -72,14 +72,22 @@ public:
 };
 
 extern "C" PSI_API
+int smints_benbee(SharedWavefunction ref_wfn,
+            SharedMatrix salcs,
+            Dimension irrep_dims,
+            Dimension mult_table,
+            Dimension atom_map,
+            Dimension character_table,
+            SharedMatrix irrep_mat,
+            SharedMatrix fxn_map,
+            Options& options)
+{
+    int a = 3;
+    return a;
+}
+
+extern "C" PSI_API
 SharedWavefunction smints(SharedWavefunction ref_wfn,
-                            SharedMatrix salcs,
-                            Dimension irrep_dims,
-                            Dimension mult_table,
-                            Dimension atom_map,
-                            Dimension character_table,
-                            SharedMatrix irrep_mat,
-                            SharedMatrix fxn_map,
                             Options& options)
 {
     int print = options.get_int("PRINT");
