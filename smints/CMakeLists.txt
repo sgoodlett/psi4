@@ -33,5 +33,7 @@ cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 project(smints CXX)
 
 find_package(psi4 1.1 REQUIRED)
-
+find_package(Einsums REQUIRED)
 add_psi4_plugin(smints sointegrals.cc)
+target_link_libraries(smints PUBLIC Einsums::einsums)
+

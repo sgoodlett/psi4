@@ -49,6 +49,7 @@ int read_options(std::string name, Options& options)
         options.add_int("PRINT", 1);
         /*- Whether to compute two-electron integrals -*/
         options.add_bool("DO_TEI", true);
+        options.add_int("ALG", 1);
     }
 
     return true;
@@ -71,29 +72,46 @@ public:
     }
 };
 
-extern "C" PSI_API
-int smints_benbee(SharedWavefunction ref_wfn,
-            SharedMatrix salcs,
-            Dimension irrep_dims,
-            Dimension mult_table,
-            Dimension atom_map,
-            Dimension character_table,
-            SharedMatrix irrep_mat,
-            SharedMatrix fxn_map,
-            Options& options)
-{
-    int a = 3;
-    return a;
+//class IntGarbage {
+//    public:
+//        SharedWavefunction ref_wfn;
+//        SharedMatrix salcs;
+//        IntGarbage(SharedWavefunction ref_wfn, SharedMatrix salcs) {
+//            ref_wfn = ref_wfn;
+//            salcs = salcs;
+//        }
+//};
+
+//SharedTwoBodySOInt control_1e(IntGarbage intgarb) {
+std::shared_ptr<BasisSet> control_1e(SharedWavefunction ref_wfn, SharedMatrix salcs) {
+    std::shared_ptr<BasisSet> aoBasis = ref_wfn->basisset();
+    return aoBasis;
+    //auto integral = std::make_shared<IntegralFactory>(aoBasis, aoBasis, aoBasis, aoBasis);
+    //std::shared_ptr<TwoBodyAOInt> tb(integral->eri());
+    //auto eri = std::make_shared<TwoBodySOInt>(tb, integral);
+    //return eri;
 }
 
 extern "C" PSI_API
 SharedWavefunction smints(SharedWavefunction ref_wfn,
+            SharedMatrix salcs,
+            Dimension irrep_dims,
+            Dimension mult_table,
+            Dimension atom_map,
+            SharedMatrix character_table,
+            SharedMatrix irrep_mat,
+            SharedMatrix fxn_map,
                             Options& options)
 {
     int print = options.get_int("PRINT");
     int doTei = options.get_bool("DO_TEI");
+    int alg = options.get_int("ALG");
+    salcs->print_out();
+    auto eri = control_1e(ref_wfn, salcs);
+    // Repack Irrep. Mats
+    // Repack 
 
-    // Get active molecule
+    /*// Get active molecule
     std::shared_ptr<Molecule> molecule = ref_wfn->molecule();
     // Grab basis object:
     std::shared_ptr<BasisSet> aoBasis = ref_wfn->basisset();
@@ -171,6 +189,7 @@ SharedWavefunction smints(SharedWavefunction ref_wfn,
             eri->compute_shell(shellIter, printer);
         }
     }
+    */
 
     return ref_wfn;
 }

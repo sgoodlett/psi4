@@ -19,6 +19,7 @@ set {
 
 set smints {
   print 1
+  alg 1
 }
 
 energy('smints')

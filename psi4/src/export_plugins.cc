@@ -31,6 +31,7 @@
 
 #include "psi4/pybind11.h"
 
+#include "psi4/libmints/matrix.h"
 #include "psi4/libfilesystem/path.h"
 #include "psi4/libmints/wavefunction.h"
 #include "psi4/liboptions/liboptions.h"
@@ -115,6 +116,47 @@ SharedWavefunction py_psi_plugin(std::string fullpathname, SharedWavefunction re
     }
 }
 
+SharedWavefunction py_psi_plugin_stephen(std::string fullpathname, SharedWavefunction ref_wfn,
+		SharedMatrix salcs,
+		Dimension irrep_dims,
+		Dimension mult_table,
+            	Dimension atom_map,
+            	SharedMatrix character_table,
+            	SharedMatrix irrep_mat,
+            	SharedMatrix fxn_map) {
+    filesystem::path pluginPath(fullpathname);
+    std::string uc = to_upper_copy(pluginPath.stem());
+    if (plugins.count(uc) == 0) {
+        plugins[uc] = plugin_load(fullpathname);
+    }
+    plugin_info &tmpinfo = plugins[uc];
+
+    outfile->Printf("\nReading options from the %s block\n", tmpinfo.name.c_str());
+    py_psi_prepare_options_for_module(tmpinfo.name);
+
+    tmpinfo.read_options(tmpinfo.name, Process::environment.options);
+
+    plugin_info &info = plugins[uc];
+
+    // Call the plugin
+    // Should be wrapped in a try/catch block.
+    outfile->Printf("Calling plugin %s.\n\n\n", fullpathname.c_str());
+
+    outfile->Printf(
+        "Plugins that use gradients: set Da, Db, and Lagrangian for gradient theory on the wavefunction. The old way of passing these will stop working "
+        "as soon as 1.8.");
+    // Call the plugin
+    if (ref_wfn) {
+        typedef SharedWavefunction (*plugin_stephen_t)(SharedWavefunction, SharedMatrix, Dimension, Dimension, Dimension, SharedMatrix, SharedMatrix, SharedMatrix, Options&);
+
+        plugin_stephen_t stephen = (plugin_stephen_t)(info.plugin);
+
+        return stephen(ref_wfn, salcs, irrep_dims, mult_table, atom_map, character_table, irrep_mat, fxn_map, Process::environment.options);
+    } else {
+        throw PSIEXCEPTION("Psi4::plugin: No wavefunction passed into the plugin, aborting");
+    }
+}
+
 /**
     Python interface for closing plugin.
 
@@ -158,4 +200,5 @@ void export_plugins(py::module &m) {
     m.def("plugin", py_psi_plugin, "Call the plugin of name arg0. Returns the plugin code result.");
     m.def("plugin_close", py_psi_plugin_close, "Close the plugin of name arg0.");
     m.def("plugin_close_all", py_psi_plugin_close_all, "Close all open plugins.");
+    m.def("plugin_stephen", py_psi_plugin_stephen, "Stephen's pybind thing");
 }
