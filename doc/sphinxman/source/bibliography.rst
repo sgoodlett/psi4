@@ -3,7 +3,7 @@
 .. #
 .. # Psi4: an open-source quantum chemistry software package
 .. #
-.. # Copyright (c) 2007-2023 The Psi4 Developers.
+.. # Copyright (c) 2007-2024 The Psi4 Developers.
 .. #
 .. # The copyrights for code used from other parties are included in
 .. # the corresponding files.
@@ -725,3 +725,19 @@ Bibliography
    F. Weigend,
    *Phys. Chem. Chem. Phys.* **4**, 4285-4291 (2002).
    https://doi.org/10.1039/B204199P
+
+.. [Brandenburg:2018:b973c]
+   J. G. Brandenburg, C.Bannwarth, A. Hansen, S. Grimme,
+   *J. Chem. Phys.* **148**, 064104, (2018).
+   https://doi.org/10.1063/1.5012601
+
+.. [Muller:2023:014103]
+   M. M\ |u_dots|\ ller and A. Hansen and S. Grimme
+   *J. Chem. Phys.* **158**, 014103 (2023).
+   https://doi.org/10.1063/5.0133026
+
+.. [Grimme:2021:064103]
+   S. Grimme and A. Hansen and S. Ehlert and J.-M. Mewes
+   *J. Chem. Phys.* **154**, 064103 (2021).
+   https://doi.org/10.1063/5.0040021
+

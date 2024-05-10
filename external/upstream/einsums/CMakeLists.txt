@@ -1,5 +1,5 @@
 if(${ENABLE_Einsums})
-    find_package(Einsums 0.3 CONFIG)
+    find_package(Einsums 0.5 CONFIG)
 
     if(TARGET Einsums::einsums)
         get_property(_loc TARGET Einsums::einsums PROPERTY LOCATION)
@@ -8,6 +8,11 @@ if(${ENABLE_Einsums})
 
         # reset below necessary as find_package clears it. better solution sought
         set(TargetHDF5_DIR ${STAGED_INSTALL_PREFIX}/share/cmake/TargetHDF5 CACHE PATH "path to externally detected TargetHDF5Config.cmake" FORCE)
+
+        if(${CMAKE_INSIST_FIND_PACKAGE_Einsums})
+            message(VERBOSE "Suitable Einsums located externally as user insists")
+        endif()
+
     else()
         if(${CMAKE_INSIST_FIND_PACKAGE_Einsums})
             message(FATAL_ERROR "Suitable Einsums could not be externally located as user insists")
@@ -27,7 +32,7 @@ if(${ENABLE_Einsums})
         ExternalProject_Add(einsums_external
             DEPENDS lapack_external
                     hdf5_external
-            URL https://github.com/Einsums/Einsums/archive/v0.3.tar.gz
+            URL https://github.com/Einsums/Einsums/archive/v0.5.tar.gz
             UPDATE_COMMAND ""
             CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${STAGED_INSTALL_PREFIX}
                        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}

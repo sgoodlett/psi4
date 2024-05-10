@@ -1,7 +1,8 @@
 #############################  Superbuild Project  #############################
-cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.19 FATAL_ERROR)
 cmake_policy(SET CMP0094 NEW)
 cmake_policy(SET CMP0075 NEW)
+#  cmake_policy(SET CMP0144 NEW)
 if (CMAKE_VERSION VERSION_GREATER_EQUAL "3.24.0")
     # Avoid warning about DOWNLOAD_EXTRACT_TIMESTAMP in CMake 3.24:
     cmake_policy(SET CMP0135 NEW)
@@ -11,6 +12,9 @@ endif()
                                               # 3.3: EP_add(DEPENDS interfacelib, CheckFortranCompilerFlag
                                               # 3.2: continue()
                                               # 3.1: CMAKE_CXX_STANDARD, BUILD_ALWAYS
+
+set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build.")  # foil Ninja Debug on Windows
+
 project(psi4
         LANGUAGES C CXX)
 set(psi4_URL "http://www.psicode.org/")
@@ -70,11 +74,11 @@ message(STATUS "Building using CMake ${CMAKE_VERSION} Generator ${CMAKE_GENERATO
 #    - SPHINX_ROOT "Root directory for Sphinx: 'bin/sphinx-build' (or similar) should be in this dir."
 #
 #    For any ${AddOn} of: ambit, CheMPS2, dkh, ecpint, libefp, Einsums, erd, gau2grid, gdma, Libint2, PCMSolver, pybind11, pylibefp,
-#                         qcelemental, qcengine, optking, simint, Libxc
+#                         qcelemental, qcengine, optking, simint, Libxc, IntegratorXX
 #    - CMAKE_PREFIX_PATH "Set to list of root directories to look for externally built add-ons and dependencies
 #      (e.g., /path/to/install-libint;/path/to/install-gdma where exists /path/to/install-libint/lib/libderiv.a)"
 #    - ${AddOn}_DIR "Set to directory containing ${AddOn}Config.cmake file to facilitate detection of external build"
-#    - CMAKE_DISABLE_FIND_PACKAGE_${AddON} "Set to OFF to force internal build"
+#    - CMAKE_DISABLE_FIND_PACKAGE_${AddON} "Set to ON to force internal build"
 #    - CMAKE_INSIST_FIND_PACKAGE_${AddON} "Set to ON to force external detect"
 
 #  <<<  Detecting BLAS/LAPACK  >>>
@@ -206,7 +210,7 @@ message(STATUS "Psi4 install: ${CMAKE_INSTALL_PREFIX}")
 # * headers: Python.h for pybind11 to build against in psi4-core
 # * library: not at all
 
-set(Python_ADDITIONAL_VERSIONS 3.11 3.10 3.9 3.8)  # adjust with CMake minimum FindPythonInterp
+set(Python_ADDITIONAL_VERSIONS 3.12 3.11 3.10 3.9 3.8)  # adjust with CMake minimum FindPythonInterp
 find_package(Python 3.8 COMPONENTS Interpreter Development NumPy REQUIRED)
 message(STATUS "${Cyan}Found Python ${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}${ColourReset}: ${Python_EXECUTABLE} (found version ${Python_VERSION})")
 
@@ -215,6 +219,9 @@ message(STATUS "Psi4 staging: ${STAGED_INSTALL_PREFIX}")
 message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 add_subdirectory(external/common)
 add_subdirectory(external/upstream)
+# FORCE_PEDANTIC HAS to go here to avoid being applied to external projects
+option_with_flags(FORCE_PEDANTIC "Forces code to comply with the language standard." OFF
+                  "-pedantic-errors")
 
 # external projects manage their own OpenMP and c++YY flags, so only add to CXX_FLAGS for psi4-core
 include(custom_cxxstandard)
@@ -249,6 +256,7 @@ ExternalProject_Add(psi4-core
            libxc_external
            mdi_external
            brianqc_external
+           integratorxx_external
    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/psi4
    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${STAGED_INSTALL_PREFIX}
               -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
@@ -278,9 +286,10 @@ ExternalProject_Add(psi4-core
               -DPython_NumPy_INCLUDE_DIR=${Python_NumPy_INCLUDE_DIR}
               -DPSI4_ROOT=${CMAKE_CURRENT_SOURCE_DIR}
               -DENABLE_ambit=${ENABLE_ambit}
-              -DENABLE_bse=${ENABLE_bse}
               -DENABLE_CheMPS2=${ENABLE_CheMPS2}
+              -DENABLE_cppe=${ENABLE_cppe}
               -DENABLE_dkh=${ENABLE_dkh}
+              -DENABLE_IntegratorXX=${ENABLE_IntegratorXX}
               -DENABLE_ecpint=${ENABLE_ecpint}
               -DENABLE_libefp=${ENABLE_libefp}
               -DENABLE_Einsums=${ENABLE_Einsums}
@@ -296,7 +305,6 @@ ExternalProject_Add(psi4-core
               -DTargetHDF5_DIR=${TargetHDF5_DIR}
               -DEigen3_DIR=${Eigen3_DIR}
               -Dambit_DIR=${ambit_DIR}
-              -Dbse_DIR=${bse_DIR}
               -DCheMPS2_DIR=${CheMPS2_DIR}
               -Ddkh_DIR=${dkh_DIR}
               -Decpint_DIR=${ecpint_DIR}
@@ -305,12 +313,12 @@ ExternalProject_Add(psi4-core
               -Derd_DIR=${erd_DIR}
               -Dgau2grid_DIR=${gau2grid_DIR}
               -Dgdma_DIR=${gdma_DIR}
-              -DLibint_DIR=${Libint_DIR}
+              #-DLibint_DIR=${Libint_DIR}
               -DLibint2_DIR=${Libint2_DIR}
               -DPCMSolver_DIR=${PCMSolver_DIR}
-              -Dddx_DIR=${ddx_DIR}
               -Dmdi_DIR=${mdi_DIR}
               -Dpybind11_DIR=${pybind11_DIR}
+              -DIntegratorXX_DIR=${IntegratorXX_DIR}
               -Dpylibefp_DIR=${pylibefp_DIR}
               -Dsimint_DIR=${simint_DIR}
               -DLibxc_DIR=${Libxc_DIR}
@@ -324,6 +332,10 @@ ExternalProject_Add(psi4-core
               -DENABLE_CYTHONIZE=${ENABLE_CYTHONIZE}
               -Dpsi4_SHGSHELL_ORDERING=${psi4_SHGSHELL_ORDERING}
    CMAKE_CACHE_ARGS -DCMAKE_PREFIX_PATH:PATH=${CMAKE_PREFIX_PATH}
+              -DCMAKE_C_COMPILER_ARG1:STRING=${CMAKE_C_COMPILER_ARG1}
+              -DCMAKE_CXX_COMPILER_ARG1:STRING=${CMAKE_CXX_COMPILER_ARG1}
+              -DCMAKE_Fortran_COMPILER_ARG1:STRING=${CMAKE_Fortran_COMPILER_ARG1}
+               # CMAKE_<lang>_COMPILER_ARG1 vars pass args thru when CMAKE_<lang>_COMPILER set as "compiler --vital-args"
    USES_TERMINAL_BUILD 1
    BUILD_ALWAYS 1)
 

@@ -3,7 +3,7 @@
  *
  * Psi4: an open-source quantum chemistry software package
  *
- * Copyright (c) 2007-2023 The Psi4 Developers.
+ * Copyright (c) 2007-2024 The Psi4 Developers.
  *
  * The copyrights for code used from other parties are included in
  * the corresponding files.
@@ -31,6 +31,8 @@
 #include <pybind11/pytypes.h>
 #include <pybind11/stl_bind.h>
 #include <pybind11/operators.h>
+
+#include <libint2.hpp>
 
 #include "psi4/libdpd/dpd.h"
 #include "psi4/libmints/basisset.h"
@@ -319,8 +321,8 @@ void export_mints(py::module& m) {
     typedef void (Vector::*vector_three)(double alpha, double beta, const Vector &other);
 
     py::class_<Dimension>(m, "Dimension", "Initializes and defines Dimension Objects")
-        .def(py::init<int>())
-        .def(py::init<int, const std::string&>())
+        .def(py::init<size_t>())
+        .def(py::init<size_t, const std::string&>())
         .def(py::init<const std::vector<int>&>())
         .def("print_out", &Dimension::print, "Print out the dimension object to the output file")
         .def("init", &Dimension::init, "Re-initializes the dimension object")
@@ -1640,6 +1642,7 @@ void export_mints(py::module& m) {
              "Append a vector of charge tuples to a current ExternalPotential")
         .def("addBasis", &ExternalPotential::addBasis, "Add a basis of S auxiliary functions iwth Df coefficients",
              "basis"_a, "coefs"_a)
+        .def("gradient_on_charges", &ExternalPotential::gradient_on_charges, "Get the gradient on the embedded charges")
         .def("clear", &ExternalPotential::clear, "Reset the field to zero (eliminates all entries)")
         .def("computePotentialMatrix", &ExternalPotential::computePotentialMatrix,
              "Compute the external potential matrix in the given basis set", "basis"_a)
@@ -1724,6 +1727,22 @@ void export_mints(py::module& m) {
         "Returns string with codes detailing the integral classes, angular momenta, and ordering \
         characteristics of the linked Libint2. Prefer the processed libint2_configuration function.");
 
-    m.def("_libint2_solid_harmonics_ordering", []() { return int(libint2::solid_harmonics_ordering()); },
-        "Libint2 SH setting");
+    m.def("libint2_solid_harmonics_ordering", []() {
+            const std::string SHOrderingsList[] = {"null", "Standard", "Gaussian"};
+            std::string sho = SHOrderingsList[int(libint2::solid_harmonics_ordering())];
+            return sho;
+        },
+        "The solid harmonics setting of Libint2 currently active for Psi4");
+
+    // when psi4 requires >=v2.8.0
+    // m.def("libint2_supports", [](const std::string& comp) { return libint2::supports(comp); },
+    //    "Whether the linked Libint2 supports a particular ordering or integral type/derivative/AM. Use maximally uniform AM for latter.");
+
+    // when L2 is pure cmake
+    // m.def("libint2_citation", []() {
+    //        const std::string cit = "    Version " + libint2::libint_version_string(true) + "\n    " +
+    //            "Edward F. Valeev, http://libint.valeyev.net/" + " (" + libint2::libint_reference_doi() + ")";
+    //        return cit;
+    //    },
+    //    "Citation blurb for Libint2");
 }
